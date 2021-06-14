@@ -10,6 +10,7 @@ I used ssd_mobilnet_v1 quantized model. U can work with any other models if you 
 
 Then take a look and if you has a question U can leave a comment or send a mail, I'll return you.
 
-Thanks to EdjeElectronics I profit his RPi tutorial in the first steps. 
+Thanks to EdjeElectronics I profit his RPi tutorial in the first steps.
+
 Thanks to Nicholas Renotte his tutorials helped me a lot.
 
