@@ -1,6 +1,6 @@
 # Data-Image-Collecting-w-Labels-for-Object-Detection
 
-This project build for graduation thesis by Me. "lol"
+This project build for graduation thesis by Me. 笑笑
 
 Whatever guys this project is an example of tflite, RPi, pydrive, data labelling, blabla...
 
