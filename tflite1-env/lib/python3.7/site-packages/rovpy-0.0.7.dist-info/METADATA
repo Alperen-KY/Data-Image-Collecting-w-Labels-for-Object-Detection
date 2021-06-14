@@ -1,0 +1,200 @@
+Metadata-Version: 2.1
+Name: rovpy
+Version: 0.0.7
+Summary: Ardusub based Rov Library
+Home-page: https://github.com/enisgetmez
+Author: Enis Getmez
+Author-email: enis@enisgetmez.com
+License: MIT
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: pymavlink
+Requires-Dist: imutils
+Requires-Dist: opencv-python
+Requires-Dist: serial
+
+
+Rovpy is a simplified python library for ardusub based robots. rovpy contains pymavlink, opencv, numpy, imutils, serial libraries.
+
+rovpy is divided into two as rovpyimage and rovpy.
+
+Rovpy: includes basic rov control and rov communication tools. these operations are based on the pymavlink library.
+rovpyimage: It contains ready-made image processing tools.
+
+Rovpy Commands:
+
+**connectrov()** command is the part where you specify your rov driving mode and the connection address to your vehicle. In short, it initializes your vehicle.
+Example Using:
+connectrov(mode="STABILIZE",connect="/dev/ttyACM0") # for serial connection
+connectrov(mode="ACRO",connect="udpin:0.0.0.0:14550") # for companion connect
+(Default mode="STABILIZE",connect="/dev/ttyACM0")
+**arm()** # arm your robot
+
+**disarm()** # disarmarm your robot
+
+**hiz()** # Converts the pwm signal to a value between -1 and 1.
+*return speed value*
+
+**control(rcinput,speed)** #  rc input takes speed value. speed value must be between 1 and -1. 1 = maximum forward -1 represents maximum reverse. For RC inputs you can check here: [https://www.ardusub.com/operators-manual/rc-input-and-output.html](https://www.ardusub.com/operators-manual/rc-input-and-output.html)
+
+**pitch(speed)** # It makes your robot pitch move. speed value must be between 1 and -1. 1 = maximum forward -1 represents maximum reverse.
+
+**roll(speed)**  # It makes your robot roll move. speed value must be between 1 and -1. 1 = maximum forward -1 represents maximum reverse.
+
+**throttle(speed)**  # It makes your robot throttle move. speed value must be between 1 and -1. 1 = maximum forward -1 represents maximum reverse.
+
+**yaw(speed)** # It makes your robot yaw move. speed value must be between 1 and -1. 1 = maximum forward -1 represents maximum reverse.
+
+**forward(speed)** # It makes your robot forward move. speed value must be between 1 and -1. 1 = maximum forward -1 represents maximum reverse.
+
+**lateral(speed)** # It makes your robot lateral move. speed value must be between 1 and -1. 1 = maximum forward -1 represents maximum reverse.
+
+**camerapan(speed)** # Turns the servo connected to your camera to the right or left. speed value must be between 1 and -1. 1 = maximum forward -1 represents maximum reverse.
+
+**cameratilt(speed)** # Turns the servo attached to your camera down or up. speed value must be between 1 and -1. 1 = maximum forward -1 represents maximum reverse.
+
+**light1level(power)** #adjusts the light level. It takes values between 1 and -1. 0 = off 1 and -1 = full power
+
+**light2level(power)** #adjusts the light level. It takes values between 1 and -1. 0 = off 1 and -1 = full power
+**videoswitch(speed)** # It can take values between 1 and -1.
+
+**sendgps(timestamp,idd,flags,gpstime,gpsweeknumber,dgps,lat,lon,alt,gpshdop,gpsvdop,northvelocity,eastvelocity,downvelocity,gpsspeed,gpshorizontal,gpsvertical,numberofsattalities)** # Allows you to send a GPS value.
+
+**rovinfo()** # Allows you to receive ahrs data such as gyro, speed, altitude.
+
+Rov Image
+**colordetect(frame,color,w=320,h=240)** #It allows you to detect already defined colors. frame = image, color = color, w = image width default 320, h = image height default 240
+*Returns frame, x, y, radius values to you. frame = marked image, x = x coordinate of the detected object, y = y coordinate of the detected image, radius = radius of the detected image*
+**Defined Colors:**
+
+
+
+
+    "blue": {"upper": "126, 255, 255",
+            "lower":"94, 80, 2"},
+
+     "red": {"upper": "255, 255, 255",
+            "lower":"171, 160, 60"},
+
+    "brown": {"upper": "30,255,255", 
+            "lower":"20,100,100"},
+
+    "green": {"upper": "102, 255, 255",
+            "lower":"25, 52, 72"},
+
+    "orange": {"upper": "25, 255, 255",
+            "lower":"10, 100, 20"},
+
+    "pink": {"upper": "11,255,255",
+            "lower":"10,100,100"},
+
+    "black": {"upper": "50,50,100",
+            "lower":"0,0,0"},
+
+    "purple": {"upper": "120, 255, 255",
+            "lower":"80, 10, 10]"},
+
+    "yellow": {"upper": "44, 255, 255",
+            "lower":"24, 100, 100"},
+
+    "white": {"upper": "0,0,255",
+            "lower":"0,0,0"},
+
+**circledetect(frame,param1=35,param2=50,minRadius=0,maxRadius=0,w=320,h=240)** ##It allows you to detect circles. frame = marked image , param1 = Gradient value used to handle edge detection in the Yuen et al. method(Default = 35). param2 = Accumulator threshold value for the `cv2.HOUGH_GRADIENT` method. The smaller the threshold is, the more circles will be detected (including false circles). The larger the threshold is, the more circles will potentially be returned(Default = 50). minRadius = minimum radius of the circle to be detected(Default = 0). maxradius = maximum radius of the circle to be detected(Default = 0). w =image width (default 320). h= image height (default 240)
+
+*Returns frame, x, y, radius values to you. frame = marked image, x = x coordinate of the detected object, y = y coordinate of the detected image, radius = radius of the detected image*
+
+**Examples :** 
+
+Detect Red Colors :
+
+    from rovpy import rovpy
+    import cv2
+
+    camera = cv2.VideoCapture(0) # for webcams
+
+    while True: 
+         (grabbed, frame) = camera.read() 
+         frame, x ,y, radius = rovpy.colordetect(frame,"red") # default = colordetect(frame,"color",w=320,h=240)
+         cv2.imshow("Color Detect", frame)
+         cv2.waitKey(1)
+
+Detect Circles : 
+
+    from rovpy import rovpy
+    import cv2
+
+    camera = cv2.VideoCapture(0) # for webcams
+
+    while True: 
+         (grabbed, frame) = camera.read() 
+         frame, x ,y, radius = rovpy.circledetect(frame,30,50) # default = circledetect(image,param1=35,param2=50,minRadius=0,maxRadius=0,weight=320,height=240)
+         print(x,y)
+         cv2.imshow("CircleDetect", frame)
+         cv2.waitKey(1)
+Rov Control :
+
+    from rovpy import rovpy
+
+    rovpy.connectrov("STABILIZE","/dev/ttyACM0") #connectrov(mode,port or udp url)
+
+    rovpy.arm()
+    a = 0
+    while(a < 1000):
+    	a+1
+    	rovpy.forward(0.5) # forward(speed) 0.5 is half speed
+    	''' if you can want use this commands
+    	rovpy.pitch(speed)
+    	rovpy.roll(speed):
+    	rovpy.throttle(speed)
+    	rovpy.yaw(speed)
+    	rovpy.forward(speed)
+    	rovpy.lateral(speed)
+    	rovpy.camerapan(speed)
+    	rovpy.cameratilt(speed)
+    	rovpy.light1level(power)
+    	rovpy.light2level(power)
+    	rovpy.videoswitch(speed)
+    	'''
+    	rovpy.disarm()
+
+Arming Rov
+
+    from rovpy import rovpy
+
+    rovpy.connectrov("STABILIZE","/dev/ttyACM0") #connectrov(mode,port or udp url)
+
+    rovpy.arm()
+
+Get ahrs data :
+
+    from rovpy import rovpy
+
+    rovpy.connectrov("STABILIZE","/dev/ttyACM0") #connectrov(mode,port or udp url)
+
+    rovpy.rovinfo()
+    '''
+    Output:
+    {'mavpackettype': 'AHRS2', 'roll': -0.11364290863275528, 'pitch': -0.02841472253203392, 'yaw': 2.0993032455444336, 'altitude': 0.0, 'lat': 0, 'lng': 0}
+    {'mavpackettype': 'AHRS3', 'roll': 0.025831475853919983, 'pitch': 0.006112074479460716, 'yaw': 2.1514968872070312, 'altitude': 0.0, 'lat': 0, 'lng': 0, 'v1': 0.0, 'v2': 0.0, 'v3': 0.0, 'v4': 0.0}
+    {'mavpackettype': 'VFR_HUD', 'airspeed': 0.0, 'groundspeed': 0.0, 'heading': 123, 'throttle': 0, 'alt': 3.129999876022339, 'climb': 3.2699999809265137}
+    {'mavpackettype': 'AHRS', 'omegaIx': 0.0014122836291790009, 'omegaIy': -0.022567369043827057, 'omegaIz': 0.02394154854118824, 'accel_weight': 0.0, 'renorm_val': 0.0, 'error_rp': 0.08894175291061401, 'error_yaw': 0.0990816056728363}
+
+    '''
+Send GPS Data :
+
+    from rovpy import rovpy
+    import time
+    timestam = time.time()
+    rovpy.connectrov("STABILIZE","/dev/ttyACM0") #connectrov(mode,port or udp url)
+
+    rovpy.sendgps(timestamp,0,8|16|32,0,0,3,0,0,0,1,1,0,0,0,0,0,0,7)
+
+For your thoughts and suggestions: enis@enisgetmez.com , http://enisgetmez.com https://instagram.com/enisgetmez
+
