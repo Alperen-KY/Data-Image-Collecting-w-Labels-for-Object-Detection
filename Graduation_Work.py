@@ -61,6 +61,8 @@ def uplooda():
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 #-----------------------------------------------------------------------------------------------------------------------------------
+#Here is added by me to generate label ".xml" files
+
 veri = list()
 veri.append('<annotation>\n')#0
 veri.append('\t<folder>drive</folder>\n')#1
@@ -89,6 +91,7 @@ veri.append('\t\t</bndbox>\n')#23
 veri.append('\t</object>\n')#24
 veri.append('</annotation>\n')#25
 
+#Here is the func. to generate .xml files
 def label_xml(detections,width,height,xmin,ymin,xmax,ymax,name):
     label = detections
     
@@ -115,12 +118,12 @@ height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 
 
-MODEL_NAME = 'my_tflite_model'
-GRAPH_NAME = 'detect.tflite'
-LABELMAP_NAME = 'labelmap.txt'
-min_conf_threshold = 0.6
+MODEL_NAME = 'my_tflite_model'          #Your own model's folder name path. Be sure your model's folder is in the same directory with .py code file
+GRAPH_NAME = 'detect.tflite'            #You can change the name or here due to ur model
+LABELMAP_NAME = 'labelmap.txt'          #It is same for here 
+min_conf_threshold = 0.6                #This works good you can change this too but it work good between 0.4 - 0.8
 imW, imH = 640, 480
-use_TPU = 'store_true'
+use_TPU = 'store_true'                  
 
 input_mean = 127.5
 input_std = 127.5
@@ -271,6 +274,7 @@ while True:
         break
 
 
+#Here upload the files into Gdrive
 uplooda()
 
 import shutil
@@ -278,5 +282,5 @@ shutil.rmtree("/home/pi/Pictures/dataset_deneme")
     
 
 
-    
+#You can delete the frame, line, contour, text functions. If you don't need them just delet them. It will raise your FPS.
     
