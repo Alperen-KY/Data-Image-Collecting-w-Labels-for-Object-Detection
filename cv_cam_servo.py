@@ -1,3 +1,6 @@
+#This code wrote to control arduino via RPi 
+#In this code the goal is to follow detected object with servo motor and arduino via RPi
+
 import cv2
 import time
 import serial
