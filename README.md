@@ -12,7 +12,7 @@ Then take a look and if you has a question U can leave a comment or send a mail,
 
 Thanks to EdjeElectronics I profit his RPi tutorial in the first steps.
 
-Thanks to Nicholas Renotte his tutorials helped me a lot.
+Thanks to Nicholas Renotte his tutorials and also his personal care has helped me a lot.
 
 
 
