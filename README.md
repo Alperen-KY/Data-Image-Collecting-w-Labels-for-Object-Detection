@@ -14,6 +14,8 @@ Thanks to EdjeElectronics I profit his RPi tutorial in the first steps.
 
 Thanks to Nicholas Renotte his tutorials and also his personal care has helped me a lot.
 
+Thanks to my teacher Prof.Dr.Mustafa GÖK he has helped me with issues during building the project a lot.
+
 
 
 Alperen KAYA / Çukurova University - 6/14/2021
