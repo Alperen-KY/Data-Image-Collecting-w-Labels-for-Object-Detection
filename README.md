@@ -8,7 +8,7 @@ In this project to collect data autonomous, firstly you should train your model 
 In the future I'm gonna work on this project more. I'm planning to add self training attribute to it. 
 I used ssd_mobilnet_v1 model. U can work with any other models if you want. 
 
-Then take a look and if you has a question U can leave a comment or send a mail, I'll return you.
+Then take a look and if you have questions U can leave a comment or send a mail, I'll return you.
 
 
 
